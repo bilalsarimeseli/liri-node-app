@@ -5,18 +5,7 @@ var axios = require("axios");
 var moment = require("moment");
 var Spotify = require('node-spotify-api');
 var fs = require("fs");
-//appends the commands in the log.  
-var text = process.argv[3];
-fs.appendFile("log.txt", text, function(err) {
-  // If an error was experienced we will log it.
-  if (err) {
-    console.log(err);
-  }
-  // If no error is experienced, we'll log the phrase "Content Added" to our node console.
-  else {
-    console.log("Content Added!");
-  }
-});
+
 
 //instantiate Spotify
 var spotify = new Spotify({
@@ -36,7 +25,9 @@ Venue location
 Date of the Event (use moment to format this as "MM/DD/YYYY")
  */
 var action = process.argv[2];
+logThis(action);
 var value = process.argv[3];
+logThis(value);
 
 switch (action) {
   case "concert-this":
@@ -63,10 +54,15 @@ function getBands(artist) {
   axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
     .then(function (response) {
 
-      console.log("Name of the venue:", response.data[0].venue.name);
-      console.log("Venue location:", response.data[0].venue.city);
+      var output = "";
+
+      output+= "Name of the venue: "+ response.data[0].venue.name+"\n";
+      output+= "Venue location: "+ response.data[0].venue.city+"\n";
       var eventDate = moment(response.data[0].datetime).format('MM/DD/YYYY');
-      console.log("Date of the Event:", eventDate);
+      output+= "Date of the Event: "+ eventDate+"\n"
+      console.log(output);
+      logThis(output);
+
     })
     .catch(function (error) {
       console.log(error);
@@ -101,7 +97,7 @@ function getMovies(movieName) {
   if (!movieName) {
     movieName = "Mr. Nobody";
   }
-  
+
   //var movieName = value;
   axios.get("http://www.omdbapi.com/?apikey=trilogy&t=" + movieName)
     .then(function (data) {
@@ -142,22 +138,38 @@ function doWhatItSays() {
     data = data.split(",");
     var action = data[0]
     var value = data[1]
-        spotifyThisSong(value)
+
+      
+
     switch (action) {
       case "concert-this":
         getBands(value)
         break;
       case "spotify-this-song":
-    spotifyThisSong(value)
+        spotifyThisSong(value)
         break;
       case "movie-this":
-        getMovies(value)
+      getMovies(value)
         break;
-      default:
-        break;
+
     }
   });
 };
 
+
+function logThis(input) {
+  //appends the commands in the log.  
+  
+  fs.appendFile("log.txt", input+"\n", function(err) {
+  // If an error was experienced we will log it.
+  if (err) {
+    console.log(err);
+  }
+  // If no error is experienced, we'll log the phrase "Content Added" to our node console.
+  else {
+    console.log("Content Added!");
+  }
+  });
+}
 
 
