@@ -13,6 +13,7 @@ do-what-it-says
 Here are the screenshots of how to run the app, how to give the commands. 
 
 concert-this:
+![Concert This](/assets/images/concert.png)
 
 
 
@@ -24,12 +25,16 @@ Date of the Event (use moment to format this as "MM/DD/YYYY")
 Spotify-this-song:
 
 This will show the following information about the song in your terminal/bash window
+
+![spotify This](/assets/images/spotify.png)
 Artist(s)
 The song's name
 A preview link of the song from Spotify
 The album that the song is from
 
 Movie-This:
+
+![spotify This](/assets/images/movie.png)
 This will output the following information to your terminal/bash window:
 Title of the movie.
 Year the movie came out.
@@ -41,6 +46,7 @@ Plot of the movie.
 Actors in the movie.
 
 Do-What-it-says:
+![spotify This](/assets/images/what_it_says.png)
 LIRI will use the text from “random.txt” and call on of LIRI’s commands. It should run Spotify-this-song for “I want it That way”.
 Technologies used:
 Spotify API
